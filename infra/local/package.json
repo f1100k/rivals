@@ -1,0 +1,9 @@
+{
+  "name": "rivals-local-infra",
+  "private": true,
+  "type": "module",
+  "description": "Ambiente local isolado: fixa a versão do CLI do Supabase (as imagens Docker dependem dela).",
+  "devDependencies": {
+    "supabase": "3.1.0"
+  }
+}

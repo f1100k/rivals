@@ -1,0 +1,6 @@
+node_modules
+package-lock.json
+# Geradas a partir de drizzle/migrations por `npm run local:up`.
+supabase/migrations
+supabase/.branches
+supabase/.temp

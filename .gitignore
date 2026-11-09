@@ -30,3 +30,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Baixados por npm run local:setup (ambiente local offline)
+public/__l5e
+public/__local-fonts
