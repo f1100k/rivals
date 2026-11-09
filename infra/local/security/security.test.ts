@@ -421,7 +421,7 @@ describe("médio: envio de imagens em massa", () => {
 
   it("quem não jogou a partida não aciona a leitura por IA", async () => {
     const match = await createMatch(team, { status: "room" });
-    await expect(callRead(outsider, match)).rejects.toThrow();
+    await expect(callRead(outsider, match)).rejects.toThrow("Só quem jogou a partida pode mandar o print.");
     expect(aiRead).not.toHaveBeenCalled();
   });
 

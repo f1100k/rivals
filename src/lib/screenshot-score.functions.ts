@@ -44,6 +44,16 @@ Mapeie as colunas explicitamente: Gol → goals; Assistência → assists; Passe
 Defesa/Defesas e Save/GK são a MESMA estatística: copie o número da coluna Defesa para saves. Não procure outra coluna de Save/GK, não confunda defesa com interceptação e não some os dois nomes como estatísticas separadas. Se a coluna estiver intitulada Save/GK ou Saves, use esse mesmo valor em saves uma única vez.
 siteName: escolha da lista de jogadores do site abaixo o nome que corresponde a esse jogador (nomes podem ter prefixo de clã, maiúsculas ou pequenas diferenças). Se nenhum corresponder com segurança, siteName = "".`;
 
+const CLAIM_ERRORS = new Map([
+  ["sem_permissao", "Só quem jogou a partida pode mandar o print."],
+  ["print_ja_enviado", "A print dessa partida já foi enviada e contabilizada."],
+  ["muitas_tentativas", "Muitas leituras agora, tente de novo em instantes."],
+]);
+
+function claimErrorMessage(code: string) {
+  return CLAIM_ERRORS.get(code) ?? "Não consegui ler o print.";
+}
+
 /** Reads the final score from a match screenshot and stores it for the caller's match. */
 export const readScreenshotScore = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -55,17 +65,7 @@ export const readScreenshotScore = createServerFn({ method: "POST" })
   .handler(async ({ data, context }) => {
     // Authorize and rate-limit before spending an AI read or storage.
     const { error: claimError } = await context.supabase.rpc("claim_screenshot_read_gk", { p_match: data.matchId });
-    if (claimError) {
-      throw new Error(
-        claimError.message.includes("sem_permissao")
-          ? "Só quem jogou a partida pode mandar o print."
-          : claimError.message.includes("print_ja_enviado")
-            ? "A print dessa partida já foi enviada e contabilizada."
-            : claimError.message.includes("muitas_tentativas")
-              ? "Muitas leituras agora, tente de novo em instantes."
-              : "Não consegui ler o print.",
-      );
-    }
+    if (claimError) throw new Error(claimErrorMessage(claimError.message));
     const { data: roster } = await context.supabase
       .from("match_players")
       .select("user_id, profiles(name)")
