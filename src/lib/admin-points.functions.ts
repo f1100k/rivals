@@ -39,11 +39,13 @@ export const readPrintPlayerNames = createServerFn({ method: "POST" })
     if (error) throw new Error("Não consegui carregar a lista de jogadores.");
     const people = (profiles ?? []).map((p) => ({ id: p.id, name: p.name ?? "" })).filter((p) => p.name);
 
+    const { aiMockEnabled, mockPrintNamesResponse } = await import("@/lib/ai-mock.server");
+    const mock = aiMockEnabled() ? mockPrintNamesResponse(people) : null;
     const key = process.env["LOVABLE_API_KEY"];
-    if (!key) throw new Error("Leitura de print indisponível no momento.");
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
+    if (!key && !mock) throw new Error("Leitura de print indisponível no momento.");
+    const res = mock ?? await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Lovable-API-Key": key, "X-Lovable-AIG-SDK": "fetch" },
+      headers: { "Content-Type": "application/json", "Lovable-API-Key": key!, "X-Lovable-AIG-SDK": "fetch" },
       body: JSON.stringify({
         model: "openai/gpt-6-astra",
         stream: true,

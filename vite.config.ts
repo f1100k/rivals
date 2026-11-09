@@ -7,6 +7,8 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  // Only `npm run local:build` sets this; Lovable keeps building for its default target.
+  ...(process.env["LOCAL_NODE_BUILD"] === "1" ? { nitro: { preset: "node-server" } } : {}),
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

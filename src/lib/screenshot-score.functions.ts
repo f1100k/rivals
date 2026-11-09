@@ -61,11 +61,13 @@ export const readScreenshotScore = createServerFn({ method: "POST" })
       .select("user_id, profiles(name)")
       .eq("match_id", data.matchId);
     const people = ((roster ?? []) as unknown as { user_id: string; profiles: { name: string } | null }[]).map((r) => ({ id: r.user_id, name: r.profiles?.name ?? "" }));
+    const { aiMockEnabled, mockScreenshotResponse } = await import("@/lib/ai-mock.server");
+    const mock = aiMockEnabled() ? await mockScreenshotResponse(data.matchId, context.userId, people) : null;
     const key = process.env["LOVABLE_API_KEY"];
-    if (!key) throw new Error("Leitura de print indisponível no momento.");
-    const res = await fetch("https://ai.gateway.lovable.dev/v1/responses", {
+    if (!key && !mock) throw new Error("Leitura de print indisponível no momento.");
+    const res = mock ?? await fetch("https://ai.gateway.lovable.dev/v1/responses", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Lovable-API-Key": key, "X-Lovable-AIG-SDK": "fetch" },
+      headers: { "Content-Type": "application/json", "Lovable-API-Key": key!, "X-Lovable-AIG-SDK": "fetch" },
       body: JSON.stringify({
         model: "openai/gpt-6-astra",
         stream: true,

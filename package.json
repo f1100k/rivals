@@ -11,7 +11,15 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "local:setup": "node infra/local/cli.mjs setup",
+    "local:up": "node infra/local/cli.mjs up",
+    "local:dev": "node infra/local/cli.mjs dev",
+    "local:reset": "node infra/local/cli.mjs reset",
+    "local:down": "node infra/local/cli.mjs down",
+    "local:status": "node infra/local/cli.mjs status",
+    "local:build": "node infra/local/cli.mjs build",
+    "local:start": "node infra/local/cli.mjs start"
   },
   "overrides": {
     "rolldown": "1.2.1"
