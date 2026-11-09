@@ -53,9 +53,19 @@ export const readScreenshotScore = createServerFn({ method: "POST" })
     return { matchId: String(input.matchId), image: input.image };
   })
   .handler(async ({ data, context }) => {
-    // Only one print per match is accepted: refuse before spending an AI read.
-    const { data: already } = await context.supabase.from("matches").select("shot_score_a, status").eq("id", data.matchId).maybeSingle();
-    if (already?.shot_score_a != null || already?.status === "completed") throw new Error("A print dessa partida já foi enviada e contabilizada.");
+    // Authorize and rate-limit before spending an AI read or storage.
+    const { error: claimError } = await context.supabase.rpc("claim_screenshot_read_gk", { p_match: data.matchId });
+    if (claimError) {
+      throw new Error(
+        claimError.message.includes("sem_permissao")
+          ? "Só quem jogou a partida pode mandar o print."
+          : claimError.message.includes("print_ja_enviado")
+            ? "A print dessa partida já foi enviada e contabilizada."
+            : claimError.message.includes("muitas_tentativas")
+              ? "Muitas leituras agora, tente de novo em instantes."
+              : "Não consegui ler o print.",
+      );
+    }
     const { data: roster } = await context.supabase
       .from("match_players")
       .select("user_id, profiles(name)")
@@ -128,7 +138,7 @@ export const readScreenshotScore = createServerFn({ method: "POST" })
     const bytes = Uint8Array.from(atob(m[2]!), (c) => c.charCodeAt(0));
     const up = await supabaseAdmin.storage.from("match-prints").upload(path, bytes, { contentType: m[1]! });
     if (up.error) throw new Error("Não consegui guardar o print.");
-    const { error } = await context.supabase.rpc("set_screenshot_score_gk", { p_match: data.matchId, p_mine: mine, p_theirs: theirs, p_path: path });
+    const { error } = await supabaseAdmin.rpc("set_screenshot_score_gk", { p_user: context.userId, p_match: data.matchId, p_mine: mine, p_theirs: theirs, p_path: path });
     if (error) {
       await supabaseAdmin.storage.from("match-prints").remove([path]);
       throw new Error(
@@ -147,7 +157,7 @@ export const readScreenshotScore = createServerFn({ method: "POST" })
 
     let matched = 0;
     if (stats.length) {
-      const { data: n } = await context.supabase.rpc("set_screenshot_stats_gk", { p_match: data.matchId, p_stats: stats });
+      const { data: n } = await supabaseAdmin.rpc("set_screenshot_stats_gk", { p_user: context.userId, p_match: data.matchId, p_stats: stats });
       matched = Number(n ?? 0);
     }
     return { mine, theirs, matched };

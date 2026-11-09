@@ -75,64 +75,6 @@ export const getInhouseState = createServerFn({ method: "GET" })
     return data as unknown as InhouseState;
   });
 
-export const joinQueue = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: { mode: Mode; region: Region }) => input)
-  .handler(async ({ data, context }) => {
-    const { data: ok, error } = await context.supabase.rpc("join_queue", {
-      p_mode: data.mode,
-      p_region: data.region,
-    });
-    if (error) throw new Error(error.message);
-    return ok;
-  });
-
-export const leaveQueue = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }) => {
-    const { error } = await context.supabase.rpc("leave_queue");
-    if (error) throw new Error(error.message);
-    return true;
-  });
-
-export const acceptMatch = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: { matchId: string }) => input)
-  .handler(async ({ data, context }) => {
-    const { data: status, error } = await context.supabase.rpc("match_accept", {
-      p_match_id: data.matchId,
-    });
-    if (error) throw new Error(error.message);
-    return status;
-  });
-
-export const declineMatch = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: { matchId: string }) => input)
-  .handler(async ({ data, context }) => {
-    const { data: status, error } = await context.supabase.rpc("match_decline", {
-      p_match_id: data.matchId,
-    });
-    if (error) throw new Error(error.message);
-    return status;
-  });
-
-export const reportScore = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((input: { matchId: string; scoreA: number; scoreB: number }) => input)
-  .handler(async ({ data, context }) => {
-    const { data: ok, error } = await context.supabase.rpc("match_report", {
-      p_match_id: data.matchId,
-      p_score_a: data.scoreA,
-      p_score_b: data.scoreB,
-    });
-    if (error) {
-      const msg = error.message.includes("empate") ? "Empate não é permitido." : error.message;
-      throw new Error(msg);
-    }
-    return ok;
-  });
-
 export const renameProfile = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { name: string }) => input)

@@ -89,3 +89,8 @@ describe("voice return after voting", () => {
     expect(cleanupMock).toHaveBeenCalledTimes(status === "cancelled" ? 1 : 0);
   });
 });
+describe("deprecated queue routes", () => {
+  it.each(["joinQueue", "leaveQueue", "acceptMatch", "declineMatch", "reportScore"])("does not expose %s", async (name) => {
+    expect(await import("./inhouse.functions")).not.toHaveProperty(name);
+  });
+});
