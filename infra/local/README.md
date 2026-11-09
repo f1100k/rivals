@@ -18,6 +18,7 @@ npm run local:dev     # sobe tudo em http://localhost:8080; Ctrl+C encerra o app
 | `npm run local:reset` | **Apaga os dados locais** e recria banco e seed |
 | `npm run local:down` | Para o backend, mantendo os dados |
 | `npm run local:status` | Mostra URLs e chaves locais |
+| `npm run local:test:security` | Executa ataques reais contra o backend local, com contas descartáveis (precisa do `local:up`) |
 | `npm run local:build` / `local:start` | Build de produção em Node e execução |
 
 - Studio (banco): http://127.0.0.1:54323
