@@ -1,0 +1,351 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+.profile-reward-tag {
+  color: var(--reward-text, var(--foreground));
+  background-color: var(--reward-background, var(--muted));
+}
+
+/* Special glowing green supporter tag */
+.profile-reward-tag[data-effect="glow-green"] {
+  position: relative;
+  overflow: hidden;
+  border-color: var(--supporter-glow);
+  text-shadow: 0 0 6px var(--supporter-glow);
+  animation: supporter-glow 2.2s ease-in-out infinite;
+}
+.profile-reward-tag[data-effect="glow-green"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, var(--supporter-shine) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: supporter-shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes supporter-glow {
+  0%, 100% { box-shadow: 0 0 4px var(--supporter-glow); }
+  50% { box-shadow: 0 0 12px var(--supporter-glow), 0 0 22px var(--supporter-glow-soft); }
+}
+@keyframes supporter-shine {
+  0%, 55% { transform: translateX(-120%); }
+  100% { transform: translateX(120%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .profile-reward-tag[data-effect="glow-green"],
+  .profile-reward-tag[data-effect="glow-green"]::after { animation: none; }
+}
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-team-a: var(--team-a);
+  --color-team-b: var(--team-b);
+  --color-success: var(--success);
+  --color-discord: var(--discord);
+  --color-discord-foreground: var(--discord-foreground);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --font-display: "Chakra Petch", sans-serif;
+  --font-sans: "Barlow", sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.11 0.015 290);
+  --foreground: oklch(0.96 0.01 290);
+  --card: oklch(0.19 0.025 290);
+  --card-foreground: oklch(0.96 0.01 290);
+  --popover: oklch(0.19 0.025 290);
+  --popover-foreground: oklch(0.96 0.01 290);
+  --primary: oklch(0.72 0.19 55);
+  --supporter-glow: oklch(0.8 0.2 150 / 0.85);
+  --supporter-glow-soft: oklch(0.8 0.2 150 / 0.35);
+  --supporter-shine: oklch(1 0 0 / 0.45);
+  --primary-foreground: oklch(0.15 0.02 55);
+  --secondary: oklch(0.25 0.03 290);
+  --secondary-foreground: oklch(0.96 0.01 290);
+  --muted: oklch(0.23 0.025 290);
+  --muted-foreground: oklch(0.68 0.03 290);
+  --accent: oklch(0.75 0.18 130);
+  --accent-foreground: oklch(0.11 0.015 290);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.3 0.03 290);
+  --input: oklch(0.3 0.03 290);
+  --ring: oklch(0.72 0.19 55);
+  --team-a: oklch(0.72 0.17 230);
+  --team-b: oklch(0.7 0.2 25);
+  --success: oklch(0.78 0.18 150);
+  /* Marcas dos canais de convocação (Discord / WhatsApp). */
+  --discord: oklch(0.59 0.19 277);
+  --discord-foreground: oklch(0.98 0 0);
+  --whatsapp: oklch(0.76 0.17 152);
+  --whatsapp-foreground: oklch(0.15 0.02 152);
+  --chart-1: oklch(0.72 0.19 55);
+  --chart-2: oklch(0.72 0.17 230);
+  --chart-3: oklch(0.7 0.2 25);
+  --chart-4: oklch(0.8 0.15 85);
+  --chart-5: oklch(0.6 0.1 290);
+  --sidebar: oklch(0.17 0.02 290);
+  --sidebar-foreground: oklch(0.96 0.01 290);
+  --sidebar-primary: oklch(0.72 0.19 55);
+  --sidebar-primary-foreground: oklch(0.15 0.02 55);
+  --sidebar-accent: oklch(0.25 0.03 290);
+  --sidebar-accent-foreground: oklch(0.96 0.01 290);
+  --sidebar-border: oklch(0.3 0.03 290);
+  --sidebar-ring: oklch(0.72 0.19 55);
+  --gradient-pitch: radial-gradient(ellipse at top, color-mix(in oklab, var(--primary) 22%, transparent), transparent 60%), linear-gradient(180deg, var(--background), oklch(0.06 0.02 55));
+  --shadow-glow: 0 0 40px -8px color-mix(in oklab, var(--primary) 60%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    background-image: var(--gradient-pitch);
+    background-attachment: fixed;
+    font-family: var(--font-sans);
+    min-height: 100vh;
+  }
+  h1, h2, h3 { font-family: var(--font-display); }
+}
+
+@utility glow { box-shadow: var(--shadow-glow); }
+html { scrollbar-width: thin; scrollbar-color: color-mix(in oklch, var(--primary) 55%, transparent) var(--background); }
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-track { background: var(--background); }
+*::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), color-mix(in oklch, var(--primary) 50%, var(--background))); border-radius: 999px; border: 2px solid var(--background); }
+*::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+*::-webkit-scrollbar-corner { background: var(--background); }
+
+@utility no-scrollbar { scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
+@keyframes pulse-ring { 0% { transform: scale(.9); opacity: .8 } 100% { transform: scale(1.6); opacity: 0 } }
+@utility animate-ring { animation: pulse-ring 1.6s ease-out infinite; }
+@layer base {
+}
+
+.halloween-background {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+body { isolation: isolate; }
+
+/* Cenário de Halloween: abóboras e árvores nas bordas, centro escuro de propósito
+   para o texto continuar legível. Fixo, então não se move com o scroll. */
+.halloween-scene {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  opacity: 0.85;
+}
+/* Cantos com abóbora, usados só no celular (a cena inteira ficaria minúscula). */
+.halloween-scene-l,
+.halloween-scene-r {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  width: 52%;
+  height: 48%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.95;
+}
+.halloween-scene-l {
+  left: 0;
+  background-position: 0% 100%;
+  -webkit-mask-image: linear-gradient(to right, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 55%, transparent 100%);
+}
+.halloween-scene-r {
+  right: 0;
+  background-position: 100% 100%;
+  /* A abóbora da direita é pequena e apagada na arte original: um brilho a mais
+     na ponta faz ela aparecer no celular. */
+  filter: brightness(1.6) saturate(1.15);
+  -webkit-mask-image: linear-gradient(to left, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to left, #000 55%, transparent 100%);
+}
+
+
+/* Véu: escurece o topo (onde ficam nav e textos) e mantém as abóboras vivas embaixo. */
+.halloween-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--background) 88%, transparent) 0%,
+      color-mix(in oklab, var(--background) 62%, transparent) 38%,
+      color-mix(in oklab, var(--background) 30%, transparent) 68%,
+      transparent 100%),
+    radial-gradient(ellipse at 50% 42%,
+      color-mix(in oklab, var(--background) 45%, transparent),
+      transparent 70%);
+}
+
+.flying-ghost {
+  position: absolute;
+  height: auto;
+  opacity: .2;
+  animation: ghost-flight 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+/* max() keeps every ghost at least ~44px/52px from the viewport edge so the
+   flight animation (max ±30px sideways, ±40px up) never leaves the frame. */
+.ghost-one { width: 150px; left: max(5%, 48px); top: max(16%, 56px); animation-delay: -4s; }
+.ghost-two { width: 84px; right: max(9%, 48px); top: max(12%, 56px); animation-duration: 23s; animation-delay: -12s; opacity: .28; }
+.ghost-three { width: 210px; right: max(4%, 48px); bottom: max(10%, 56px); animation-duration: 26s; animation-delay: -7s; opacity: .15; }
+.ghost-four { width: 64px; left: max(18%, 48px); bottom: max(15%, 56px); animation-duration: 16s; animation-delay: -9s; }
+@keyframes ghost-flight {
+  0% { transform: translate3d(0, 12px, 0) rotate(-8deg); }
+  35% { transform: translate3d(24px, -20px, 0) rotate(4deg); }
+  70% { transform: translate3d(-12px, -40px, 0) rotate(-3deg); }
+  100% { transform: translate3d(30px, -8px, 0) rotate(8deg); }
+}
+@media (max-width: 640px) {
+  .ghost-one { width: 90px; }
+  .ghost-two { width: 52px; }
+  .ghost-three { width: 125px; }
+  .ghost-four { width: 45px; }
+  /* Em retrato, a cena inteira ficaria pequena demais: as abóboras viram dois
+     cantos ampliados, um de cada lado do rodapé, com fade no meio. */
+  .halloween-scene { display: none; }
+  .halloween-scene-l,
+  .halloween-scene-r { display: block; }
+  .halloween-veil {
+    background:
+      linear-gradient(180deg,
+        color-mix(in oklab, var(--background) 92%, transparent) 0%,
+        color-mix(in oklab, var(--background) 72%, transparent) 52%,
+        color-mix(in oklab, var(--background) 12%, transparent) 100%);
+  }
+}
+
+
+/* Phones: nothing may widen the page sideways. */
+@media (max-width: 639px) {
+  html, body { overflow-x: clip; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flying-ghost { animation: none; will-change: auto; }
+}
+
+/* Rank badges: cada patente tem cor, ícone e brilho próprios. */
+.rank-badge {
+  --rb: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in oklab, var(--rb) 60%, transparent);
+  background: color-mix(in oklab, var(--rb) 14%, transparent);
+  color: var(--rb);
+  padding: 0.15rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.rank-badge svg { width: 0.95em; height: 0.95em; }
+.rank-badge__pips { display: inline-flex; gap: 2px; margin-left: 2px; }
+.rank-badge__pips i {
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background: color-mix(in oklab, var(--rb) 30%, transparent);
+}
+.rank-badge__pips i.on { background: var(--rb); }
+.rank-badge--bronze { --rb: oklch(0.68 0.13 55); }
+.rank-badge--prata { --rb: oklch(0.85 0.02 250); }
+.rank-badge--ouro { --rb: oklch(0.84 0.16 90); }
+.rank-badge--platina { --rb: oklch(0.86 0.09 200); }
+.rank-badge--diamante {
+  --rb: oklch(0.78 0.15 230);
+  box-shadow: 0 0 10px color-mix(in oklab, var(--rb) 35%, transparent);
+}
+.rank-badge--elite {
+  --rb: oklch(0.74 0.24 330);
+  box-shadow: 0 0 14px color-mix(in oklab, var(--rb) 50%, transparent);
+  background: linear-gradient(135deg,
+    color-mix(in oklab, var(--rb) 22%, transparent),
+    color-mix(in oklab, var(--primary) 18%, transparent));
+}
+
+/* ==== Molduras de avatar (arte transparente sobreposta ao avatar) ==== */
+.avatar-frame-img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 158%;
+  height: 158%;
+  max-width: none;
+  max-height: none;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10;
+}

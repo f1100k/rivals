@@ -1,0 +1,1 @@
+CREATE OR REPLACE FUNCTION public.report_ban_hours(p_strikes integer) RETURNS integer LANGUAGE sql IMMUTABLE SET search_path=public AS $$ SELECT CASE WHEN p_strikes=1 THEN 1 WHEN p_strikes=2 THEN 24 ELSE NULL END $$;

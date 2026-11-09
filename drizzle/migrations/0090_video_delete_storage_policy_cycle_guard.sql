@@ -1,0 +1,4 @@
+CREATE FUNCTION public.video_object_absent(p_path text) RETURNS boolean LANGUAGE sql STABLE SECURITY DEFINER SET search_path=public AS $$ SELECT NOT EXISTS(SELECT 1 FROM storage.objects WHERE bucket_id='player-videos' AND name=p_path) $$;
+REVOKE ALL ON FUNCTION public.video_object_absent(text) FROM PUBLIC,anon; GRANT EXECUTE ON FUNCTION public.video_object_absent(text) TO authenticated,service_role;
+DROP POLICY video_admin_delete ON public.player_videos;
+CREATE POLICY video_admin_delete ON public.player_videos FOR DELETE TO authenticated USING(public.has_role(auth.uid(),'admin') AND NOT active AND public.video_object_absent(object_path));

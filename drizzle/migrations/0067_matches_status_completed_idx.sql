@@ -1,0 +1,1 @@
+CREATE INDEX IF NOT EXISTS matches_status_completed_at_idx ON public.matches (status, completed_at DESC);

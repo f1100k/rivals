@@ -1,0 +1,1 @@
+CREATE POLICY "admins read promo files" ON storage.objects FOR SELECT TO authenticated USING (bucket_id = 'promos' AND public.has_role(auth.uid(), 'admin'));

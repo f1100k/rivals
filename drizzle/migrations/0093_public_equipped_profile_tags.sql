@@ -1,0 +1,2 @@
+CREATE FUNCTION public.get_equipped_profile_tags() RETURNS jsonb LANGUAGE sql STABLE SECURITY DEFINER SET search_path=public AS $$ SELECT coalesce(jsonb_agg(jsonb_build_object('user_id',p.user_id,'name',t.name,'text_color',t.text_color,'background_color',t.background_color)),'[]'::jsonb) FROM public.player_profile_tags p JOIN public.profile_tags t ON t.id=p.tag_id WHERE p.equipped $$;
+REVOKE ALL ON FUNCTION public.get_equipped_profile_tags() FROM PUBLIC; GRANT EXECUTE ON FUNCTION public.get_equipped_profile_tags() TO anon,authenticated,service_role;

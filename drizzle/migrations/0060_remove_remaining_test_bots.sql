@@ -1,0 +1,4 @@
+DELETE FROM auth.users WHERE id IN (
+ SELECT id FROM public.profiles WHERE name ~ '^Bot [1-8]$' AND wins = 0 AND losses = 0
+ AND id IN ('858733be-76c4-41d4-a318-62dc98d7c163','f691b8a7-829e-4d6a-9306-551146c710d2','fd50575f-e5fa-422e-b599-07011380961d','e43cf9ca-0ba4-4fca-bff5-fb3e36ce9abe','f01a3ee9-6bce-48e4-a7a7-6c2e927178be','82bd124e-311b-45c1-a07b-f954924a29a4','8978cb1c-4fbc-4157-ba05-0c149b3cf43e','fdc17e8c-b68c-47fe-8524-46ca9233d797'));
+DELETE FROM public.profiles WHERE id IN ('858733be-76c4-41d4-a318-62dc98d7c163','f691b8a7-829e-4d6a-9306-551146c710d2','fd50575f-e5fa-422e-b599-07011380961d','e43cf9ca-0ba4-4fca-bff5-fb3e36ce9abe','f01a3ee9-6bce-48e4-a7a7-6c2e927178be','82bd124e-311b-45c1-a07b-f954924a29a4','8978cb1c-4fbc-4157-ba05-0c149b3cf43e','fdc17e8c-b68c-47fe-8524-46ca9233d797');

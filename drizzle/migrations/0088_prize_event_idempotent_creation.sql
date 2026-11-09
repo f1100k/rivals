@@ -1,0 +1,4 @@
+DO $$ DECLARE d text; BEGIN
+SELECT pg_get_functiondef('public.admin_save_prize_event(uuid,text,numeric,numeric,numeric)'::regprocedure) INTO d;
+d:=replace(d,'IF p_id IS NULL THEN INSERT INTO public.prize_events(name,first_amount,second_amount,third_amount,created_by) VALUES(trim(p_name),round(p_first,2),round(p_second,2),round(p_third,2),auth.uid())','IF p_id IS NULL OR NOT EXISTS(SELECT 1 FROM public.prize_events WHERE id=p_id) THEN INSERT INTO public.prize_events(id,name,first_amount,second_amount,third_amount,created_by) VALUES(coalesce(p_id,gen_random_uuid()),trim(p_name),round(p_first,2),round(p_second,2),round(p_third,2),auth.uid())'); EXECUTE d;
+END $$;

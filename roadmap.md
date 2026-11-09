@@ -1,0 +1,121 @@
+# Roadmap
+- [x] Loja: botão "Editar valores" só para ADM, editando preços direto na Loja (atualiza pra todos).
+- [x] Liberar a Loja para todos os jogadores, sem nenhum editor visível para quem não é ADM.
+- [x] Admin → aba "Valores" (só ADM): trocar o preço de tudo da Loja e adicionar à Loja itens que ainda não estão lá.
+- [x] Emblemas: Admin envia imagem (fundo apagado sozinho), entrega por season; jogador escolhe no Perfil; aparece na frente do nome e nas conquistas da season; testado ponta a ponta e emblema de teste apagado.
+- [x] Perfil: escolher a season e ver estatísticas e conquistas dela (incluindo a season atual)
+- [x] Seasons: período atual vira Season 0 (contando desde o começo); ao finalizar uma season, a próxima começa sozinha
+- [x] Modo Mix no Admin: ligar/desligar na hora ou programar início/fim; capitães = 2 maiores MMR, resto sorteado em duplas de MMR parecido, 1 goleiro por time; partida simulada e desfeita (5x5, 1 goleiro cada, zero perfis alterados).
+- [x] Mix programado para hoje 20h–23h (Brasília).
+- [x] Ranking Mix separado (saldo = vitórias − derrotas, empate por mais vitórias), sem mexer no MMR; testes passaram e aba conferida na tela.
+- [x] Ranking Mix MVP: conta os MVPs (selo do print aprovado) só nas partidas Mix; aba própria no Ranking
+- [x] Rank Mix e Rank Mix MVP contam só partidas jogadas com o Mix ligado; param ao desligar
+- [ ] Conferir o Mix numa partida real às 20h — depende de jogadores na fila.
+- [x] Fila: lista de quem está na fila visível só para ADM e staff (o banco só envia a lista para eles); demais jogadores veem só a contagem.
+- [x] Celular: menu em duas linhas, contador e divulgação compactos, ranking sem rolagem lateral, fila/partida/resultado ajustados; computador inalterado; páginas conferidas em 390px.
+- [x] Fila: abaixo de "Sair da fila", lista de quem está na fila com GK/Linha; teste de tela passou; não visto ao vivo com gente na fila.
+- [x] Admin → Pontos: adicionar/tirar pontos de vários jogadores por print (IA acha os nomes) ou digitando o nome; print com 5 jogadores lido e conferido na tela sem salvar.
+- [x] Corrigir curtidas: liberadas na aba Resultado da partida durante a votação (antes ficavam travadas até o fim, quando a tela sumia); teste de banco desfeito e 5 testes de tela passaram.
+- [x] Admin → Permissões: banner personalizado e acesso à Loja por jogador; tela conferida, regras testadas no banco e desfeitas.
+- [x] Tag especial verde brilhante "Apoiador" criada (com opção de brilho no editor de títulos).
+- [x] Notificação (sino no topo + aviso na tela) ao receber moldura, moedas, protetor, título ou permissão; gravação testada no banco, aviso ao vivo não testado com entrega real.
+- [x] Admin: slider de tamanho do quadradinho da divulgação (100% → 150% → 100% conferido na tela, largura 256 → 384 → 256 px); vídeos aceitos até 2 GB (limite do bucket confirmado); apagar vídeo remove o arquivo e o registro — vídeo de teste publicado e apagado, restando zero registros e zero arquivos; dois arquivos de divulgação sem uso foram apagados.
+- [x] Página Doação com QR Code enviado, Pix copiável, explicação e benefícios acima de R$ 5; QR carregado e cópia exata conferidos, computador/celular sem transbordamento, 2 testes passaram. Página informa confirmação manual; não automatiza entrega de recompensas.
+- [x] Jogador escolhe uma tag recebida no Perfil; tag equipada aparece ao lado do nome como STAFF em nomes de jogadores no site; seleção e ranking conferidos.
+- [x] Banner atrás da foto com composição confortável no perfil e no perfil do ranking; computador/celular conferidos com banner temporário e restaurados.
+- [x] Tags de perfil: criação/cores e entrega por admins, exibição nos perfis, permissões e testes; tag temporária entregue/equipada/retirada e apagada, testes de banco isolados passaram.
+- [x] Aumentar limite de upload de vídeos para 600 MB; limite do armazenamento confirmado, envio por partes e testes de fronteira passaram; arquivo de 600 MB não foi enviado.
+- [x] Admin → Prêmios: evento, valores e destinatários editáveis; salvamento/recarga conferidos, pagamento testado isoladamente, dados temporários removidos.
+- [x] Votação de expulsão de 20s e substituição FIFO, aguardando fila vazia; testes isolados de maioria/empate/autovoto/outsider/FIFO/pool/conta preservada passaram, sem expulsar jogador real.
+- [x] Admin: editor visual da loja com nomes, preços, ordem, visibilidade e quantidade; alteração e leitura na loja verdadeira conferidas e revertidas.
+- [x] Admin: enviar/apagar vídeos para todos ou jogadores específicos; envio para JVI, reprodução decodificada em tela cheia e exclusão pela tela conferidos, arquivos temporários removidos.
+- [x] Testar permissões e fluxos sem alterar partidas reais: 171 testes passaram e testes de banco isolados passaram.
+- [ ] Conferir expulsão/substituição em partida real pela tela — não realizada para não interferir na partida em andamento; regras testadas em cópias isoladas.
+- [x] Admin: apagar molduras enviadas com confirmação; exclusão de item temporário e saída da loja conferidas.
+- [x] Admin → Jogadores: somar/remover MMR com motivo, confirmação, piso zero e registro; testes de envio passaram e diálogo conferido sem alterar jogador real.
+- [x] Corrigir upload de molduras: publicar na loja com preço, sem conceder acesso geral; entrega separada preservada; 11 testes passaram e publicação real conferida com zero entregas.
+- [x] Admin: cadastrar molduras por upload e disponibilizar para todos sem código; publicação e aplicação com recarga verificadas, arte de teste removida.
+- [x] Admin: entregar molduras, moedas e protetores aos jogadores com verificação de permissões e registro; entrega de moldura pela tela e testes isolados de moedas/protetores/duplicatas/permissões passaram.
+- [x] Ocultar Times/Resultado da última partida antes de puxar fila, mantendo proteção e controles; conferido na sessão autenticada.
+- [x] Permitir enviar/remover banner e exibi-lo no Perfil e nos perfis abertos pelo ranking; upload, recarga, ranking e remoção conferidos, imagem temporária removida.
+- [x] Ajustar total de derrotas do Arroganti para 21, preservando vitórias e MMR.
+- [x] Likes reais na aba Resultado após finalizar; simulação removida; 13 testes passaram, jogadores reais conferidos no computador/celular e gravação +1/duplicata testada com reversão (zero likes de teste restantes).
+- [x] Remover todas as contas bot e dados exclusivos delas; confirmado zero bots e preservadas 86 pessoas reais.
+- [x] Confirmar entendimento de “Partidas ao vivo” ao lado da Fila, com código da sala para espectadores; implementação não solicitada neste turno.
+- [x] Tornar os registros da proteção pessoal acessíveis só ao titular, sem conceder benefício ou acesso aos outros admins.
+- [x] Explicar que a proteção exclusiva fica registrada para consulta dos admins, sem conceder a eles o mesmo benefício.
+- [x] Esclarecer novamente: o benefício é só da conta Arroganti; os demais admins podem consultar quando evitou desconto.
+- [x] Substituir proteção de uso único por regra exclusiva do Arroganti: primeira derrota sem desconto, segunda seguida -17, vitória reinicia; manter histórico e auditoria privada.
+- [x] Testar pares de derrotas, vitória intermediária, piso zero e exclusividade da conta sem alterar dados reais; Perfil conferido após recarga.
+- [x] Implementar novas médias e pontuação +18/+28/-19 sem recalcular partidas antigas.
+- [x] Exigir validação admin após sete denúncias da mesma partida e descontar 9 adicionais por trollagem confirmada.
+- [x] Implementar proteção diária e por patente, consumo único e histórico persistente.
+- [x] Mostrar regulamento abaixo das patentes e controles de proteção no resultado.
+- [x] Testar regras em tabelas isoladas e 34 testes; conferir carteira autenticada e regulamento no navegador.
+- [ ] Confirmar ativação pela tela após uma nova derrota real — aguarda partida no novo regulamento; partidas antigas não são elegíveis.
+- [x] Reativar ajuste de molduras para admins e liberar Neon Roxo para admins e Hiei; testes de acesso e salvamento com recarga passaram.
+- [x] Conter fotos no círculo e permitir enquadramento antes do upload; salvamento e leitura após recarregar verificados no Perfil, prévia conferida no celular.
+- [ ] Adicionar dez molduras selecionáveis no Perfil, exclusivas para administradores
+- [ ] Testar salvamento e bloqueio de molduras para jogadores comuns
+- [ ] Limpar mensagens do #fila somente após encerramento confirmado, preservando os botões
+- [ ] Verificar proteção de partidas abertas e preservação dos botões nos testes
+- [x] Preparar entrada e saída por posição no #fila, ligada à conta do site
+- [x] Verificar assinatura, posições e proteção das regras da fila — testes passaram
+- [ ] Registrar o endereço de interações no Developer Portal do Discord (colar a URL pública) — passo manual do dono do app; painel já postado no #fila e publicação agendada
+- [ ] Testar entrada real pelo botão no Discord — aguarda ativação e jogador vinculado
+- [x] Devolver jogadores à Sala de espera antes de fechar calls ao finalizar votação — testes passaram
+- [x] Impedir retorno antecipado enquanto a partida estiver aberta, inclusive durante votação — testes passaram
+- [ ] Confirmar retorno em calls reais — aguarda partida encerrada com jogadores conectados no Discord
+- [x] Calls temporárias Time A/B no Discord + ligar Discord no perfil
+- [x] Alargar a lista do ranking para não quebrar
+- [x] Ampliar Admin com votos, histórico e bots de teste
+- [x] Verificar testes de permissões e bloqueio para jogador comum
+- [ ] Testar adicionar bots e encerrar votação pelo painel — aguarda acesso autorizado a uma conta admin
+
+- [x] Header: Rivals logo shown before the INHOUSE wordmark (done).
+
+- [x] Avatar frames: crown frame plus fire/lightning badges (done).
+- Corrigir coroa da moldura sendo cortada (badge 👑 fora da área visível)
+- Lembrete para conectar Discord (site + tela de login)
+- [x] Corrigir coroa da moldura sendo cortada — conferida no preview
+- [x] Tag STAFF ao lado de quem é admin: navegação, ranking, perfis, busca e fila
+- [ ] Reconnecting Discord: JVI perdeu o vínculo durante o teste do lembrete — precisa clicar em Conectar Discord no Perfil (bloqueia apenas a conta dele)
+- [x] Remover bots do ranking e ignorar partidas com bots
+- [x] Cargo Membro automático: entrega pelo Discord conectado no site (5 contas verificadas, 3 recebidas agora); varredura do servidor inteiro segue opcional e depende do Server Members Intent
+- [ ] Publicar o site para o cargo Membro continuar sendo entregue a cada minuto no link público
+- [x] Subir o tempo de inatividade na fila de 5 para 10 minutos sem remover a regra de saída automática
+- [x] Mostrar MMR total de cada time e marcar Favorito / Desafiador no quadro de Times
+- [x] Implementar o PROMPT MASTER: capitães pelos 2 maiores MMR, draft A-B-B-A-A-B-B-A, Elo K=32 com expectativa, win streak exponencial com controles, probabilidade de vitória e histórico de patentes
+- [x] Painel "Chama a galera" no Início com os convites do Discord e do WhatsApp — links conferidos na tela do celular e do computador
+- [x] Texto do painel de convites formalizado (Convocação / Sem equipe completa, a partida não começa)
+- [x] Capitão do topo do ranking escolhe goleiros e linhas no draft (banco único com os dois grupos separados na tela)
+- [x] Otimização para 50+ usuários simultâneos: molduras em cache longo, saída rápida no matchmaking, índice do histórico; banco saudável (13/60 conexões)
+- [x] MMR nunca abaixo de zero (piso no finalize_match_gk, penalidade por trolling e trava na tabela; teste de banco passou)
+- [x] Link "Esqueci a senha" na tela de login com envio de e-mail e troca de senha (testado no navegador)
+- [x] Print: contabilizar e não guardar a imagem (só lida pela IA, sem armazenamento)
+- [x] Suportar duas partidas simultâneas sem travar
+- [x] Curtidas no perfil: contagem ao lado do MMR e lista de quem curtiu, no diálogo de perfil e no Perfil ("Minhas curtidas")
+- [x] Corrigir localização: curtidas no Resultado da própria partida após votação; removidas do histórico no cabeçalho e nome Partidas restaurado; 16 testes e navegação autenticada conferidos.
+- [x] Manter curtidas visíveis também durante votação de nova partida, com jogadores atuais bloqueados até encerrar e curtidas anteriores disponíveis; 14 testes e votação real conferidos sem alterar resultados.
+- [x] Ocultar curtidas ao abrir/puxar fila; mostrar somente ao selecionar Resultado, sem histórico durante busca; aba de votação confirmada pela imagem do usuário e navegação autenticada.
+- [x] Remover histórico de curtidas: somente jogadores da partida atual durante votação e última partida após encerramento; 15 testes e partida atual conferidos.
+- [x] "Reportar problema" apontando para o formulário do Google: link no menu (computador e celular) e no rodapé de todas as telas, abrindo em nova aba; endereço único em src/lib/links.ts e abertura da URL real conferida no navegador.
+- [x] Protetor de ponto: 5 protetores entregues ao Arroganti; painel fora de partida ao vivo com explicação do motivo; mensagem do banco corrigida; ativação conferida (4 testes do painel, 155 no total, testes de banco de pontuação/proteção passando)
+- [x] Print do placar visível a todos; 6 aceites validam, 6 recusas liberam novo
+- [x] Fila de teste só para admins (bots, sem MMR/ranking/moedas, sem Discord)
+Anotado: nota de atualizacao e so para leitura do usuario, NAO publicar no site.
+- [x] Banner do perfil mesclado ao fundo com degradê
+- [x] Expulsão por votação só efetiva após aprovação de um admin
+- [x] Admin: opção de atualizar as filas e os status das partidas
+- [x] Varredura de instabilidade do site e correções para evitar quedas
+- [x] Admin: contador com texto fixo no canto inferior esquerdo
+- [x] Fila do Discord usando o novo domínio do site
+- [x] Admin: propagandas (vídeo/foto/texto) com biblioteca, área de rotação arrastável, intervalo e repetições de vídeo; janela pequena fixa no canto inferior direito
+- [x] Banner só para admins; apagar banners de quem não é admin
+- [x] Divulgação e contador sem botão X (sempre visíveis)
+- [x] Seasons: Admin cria/inicia/finaliza season (datas manuais); ao finalizar guarda as estatísticas de cada jogador naquela season; perfil com seletor de season (estatísticas) e aba de conquistas por season; tags entregues ficam ligadas à season ativa e mostram a season ao lado do nome
+- [x] Mix: separar jogadores por posição (cada time com goleiro, pivô, fixo e ala)
+- [x] Mix: tirar os pontos negativos do Arroganti (Death High) no Mix
+- [x] Loja: separar em abas Molduras e Fontes, com explicação passo a passo em cada aba.
+- [x] Loja: cada novo tipo de item ganha aba própria; tipos sem aba caem em "Outros".
+- [x] Cores do nome: Admin → Cores (criar com 30 modelos prontos, preço, colocar na loja, entregar/retirar), aba Cores na Loja, Perfil → Cor do nome; testado ponta a ponta e cor de teste apagada.

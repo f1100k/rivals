@@ -1,0 +1,1 @@
+DO $$ DECLARE d text; BEGIN SELECT pg_get_functiondef(oid) INTO d FROM pg_proc WHERE pronamespace='public'::regnamespace AND proname='get_admin_control_overview'; d:=replace(d,'''name'',p.name,''team'',mp.team','''userId'',mp.user_id,''name'',p.name,''team'',mp.team'); EXECUTE d; END $$;

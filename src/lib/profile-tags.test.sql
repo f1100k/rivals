@@ -1,0 +1,41 @@
+BEGIN;
+CREATE TEMP TABLE profile_tags (LIKE public.profile_tags INCLUDING ALL);
+CREATE TEMP TABLE player_profile_tags (LIKE public.player_profile_tags INCLUDING ALL);
+CREATE TEMP TABLE profiles (LIKE public.profiles INCLUDING ALL);
+CREATE TEMP TABLE mod_actions (LIKE public.mod_actions INCLUDING ALL);
+CREATE TEMP TABLE user_roles (LIKE public.user_roles INCLUDING ALL);
+DO $$ DECLARE n text; d text; t text; BEGIN
+ FOREACH n IN ARRAY ARRAY['admin_save_profile_tag','admin_grant_profile_tag','equip_profile_tag'] LOOP
+ SELECT pg_get_functiondef(oid) INTO d FROM pg_proc WHERE pronamespace='public'::regnamespace AND proname=n;
+ d:=replace(d,'FUNCTION public.'||n||'(','FUNCTION pg_temp.'||n||'(');
+ d:=replace(d,'SET search_path TO ''public''','SET search_path TO pg_temp,public');
+ FOREACH t IN ARRAY ARRAY['profile_tags','player_profile_tags','profiles','mod_actions'] LOOP d:=replace(d,'public.'||t,t); END LOOP;
+ d:=replace(d,'public.has_role(auth.uid(),''admin'')','EXISTS(SELECT 1 FROM user_roles WHERE user_id=auth.uid() AND role=''admin'')');
+ d:=replace(d,'auth.uid()','nullif(current_setting(''request.jwt.claim.sub'',true),'''')::uuid');
+ EXECUTE d;
+ END LOOP;
+END $$;
+DO $$ DECLARE a uuid:=gen_random_uuid(); u uuid:=gen_random_uuid(); tag uuid:=gen_random_uuid(); denied boolean; BEGIN
+ INSERT INTO user_roles(user_id,role) VALUES(a,'admin'); INSERT INTO profiles(id,name) VALUES(u,'Recipient');
+ PERFORM set_config('request.jwt.claim.sub',a::text,true);
+ PERFORM pg_temp.admin_save_profile_tag(tag,'Campeão','#ffffff','#cc2233');
+ IF NOT EXISTS(SELECT 1 FROM profile_tags WHERE id=tag AND name='Campeão' AND text_color='#ffffff' AND background_color='#cc2233') THEN RAISE EXCEPTION 'title colors not saved'; END IF;
+ PERFORM pg_temp.admin_grant_profile_tag(tag,ARRAY[u],false);
+ PERFORM pg_temp.admin_grant_profile_tag(tag,ARRAY[u],false);
+ IF (SELECT count(*) FROM player_profile_tags WHERE user_id=u AND tag_id=tag)<>1 THEN RAISE EXCEPTION 'grant not idempotent'; END IF;
+ PERFORM set_config('request.jwt.claim.sub',u::text,true);
+ denied:=false; BEGIN PERFORM pg_temp.admin_save_profile_tag(tag,'Forbidden','#ffffff','#111111'); EXCEPTION WHEN OTHERS THEN denied:=true; END;
+ IF NOT denied THEN RAISE EXCEPTION 'non-admin creation allowed'; END IF;
+ denied:=false; BEGIN PERFORM pg_temp.admin_grant_profile_tag(tag,ARRAY[u],true); EXCEPTION WHEN OTHERS THEN denied:=true; END;
+ IF NOT denied THEN RAISE EXCEPTION 'non-admin grant allowed'; END IF;
+ PERFORM pg_temp.equip_profile_tag(tag);
+ IF NOT EXISTS(SELECT 1 FROM player_profile_tags WHERE user_id=u AND tag_id=tag AND equipped) THEN RAISE EXCEPTION 'owned selection failed'; END IF;
+ denied:=false; BEGIN PERFORM pg_temp.equip_profile_tag(gen_random_uuid()); EXCEPTION WHEN OTHERS THEN denied:=true; END;
+ IF NOT denied THEN RAISE EXCEPTION 'unowned selection allowed'; END IF;
+ PERFORM pg_temp.equip_profile_tag(NULL);
+ IF EXISTS(SELECT 1 FROM player_profile_tags WHERE user_id=u AND equipped) THEN RAISE EXCEPTION 'unequip failed'; END IF;
+ PERFORM set_config('request.jwt.claim.sub',a::text,true);
+ PERFORM pg_temp.admin_grant_profile_tag(tag,ARRAY[u],true);
+ IF EXISTS(SELECT 1 FROM player_profile_tags WHERE user_id=u) THEN RAISE EXCEPTION 'revocation failed'; END IF;
+END $$;
+ROLLBACK;
