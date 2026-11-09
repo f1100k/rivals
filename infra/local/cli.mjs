@@ -207,7 +207,7 @@ const commands = {
     writeEnv(info);
     await applySeed(info);
     console.log(`\nPronto (${total} migrations no journal).`);
-    console.log(`  App:     npm run local:dev  →  http://localhost:8080`);
+    console.log(`  App:     http://localhost:8080 (npm run local:dev)`);
     console.log(`  Studio:  ${info.STUDIO_URL}`);
     console.log(`  E-mails: ${info.MAILPIT_URL}`);
   },
@@ -232,9 +232,18 @@ const commands = {
     supabase("status");
   },
 
-  dev() {
-    loadLocalEnv();
-    run("npx", ["vite", "dev"]);
+  /** Sobe o backend, roda o app e para o backend quando o app encerra (inclusive no Ctrl+C). */
+  async dev() {
+    await commands.up();
+    // Chama o Vite direto: via npx.cmd, o Ctrl+C no Windows pararia em "Terminate batch job?".
+    const vite = path.join(root, "node_modules", "vite", "bin", "vite.js");
+    const app = spawn(process.execPath, [vite, "dev"], { cwd: root, stdio: "inherit" });
+    // Sem estes handlers, o sinal encerraria este processo antes de parar o backend.
+    for (const signal of ["SIGINT", "SIGTERM", "SIGHUP", "SIGBREAK"])
+      process.on(signal, () => app.kill(signal));
+    await new Promise((resolve) => app.on("exit", resolve));
+    console.log("\nApp encerrado. Parando o backend...");
+    commands.down();
   },
 
   build() {

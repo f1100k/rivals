@@ -80,11 +80,11 @@ export async function seed(url, serviceKey, dbUrl) {
       `Jogador ${n}`,
       POSITIONS[(i - 1) % POSITIONS.length],
     );
-    // MMRs diferentes: os dois maiores viram capitães e o ranking não fica vazio.
+    // MMRs diferentes definem os capitães; o ranking só lista quem tem vitória ou derrota.
     must(
       await db
         .from("profiles")
-        .update({ rating: 1300 - i * 75 })
+        .update({ rating: 1300 - i * 75, wins: 30 - i * 2, losses: 8 + i })
         .eq("id", id),
       `rating de ${n}`,
     );

@@ -8,13 +8,13 @@ Precisa de Node e do Docker Desktop aberto.
 
 ```sh
 npm run local:setup   # só uma vez, com internet: dependências, imagens, assets e fontes
-npm run local:up      # sobe o backend (não precisa de internet)
-npm run local:dev     # http://localhost:8080
+npm run local:dev     # sobe tudo em http://localhost:8080; Ctrl+C encerra o app e o backend
 ```
 
 | Comando | O que faz |
 |---|---|
-| `npm run local:up` | Sobe o backend e aplica migrations novas, mantendo os dados |
+| `npm run local:dev` | Sobe o backend e o app; ao encerrar o app, para o backend mantendo os dados |
+| `npm run local:up` | Só sobe o backend e aplica migrations novas, mantendo os dados |
 | `npm run local:reset` | **Apaga os dados locais** e recria banco e seed |
 | `npm run local:down` | Para o backend, mantendo os dados |
 | `npm run local:status` | Mostra URLs e chaves locais |
