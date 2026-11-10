@@ -2329,6 +2329,7 @@ export type Database = {
       buy_shop_item: { Args: { p_item: string }; Returns: number }
       can_edit_frame_fits: { Args: never; Returns: boolean }
       can_read_queue_chat: { Args: { p_match: string }; Returns: boolean }
+      claim_screenshot_read_gk: { Args: { p_match: string }; Returns: boolean }
       cast_match_kick_gk: {
         Args: { p_vote: string; p_yes: boolean }
         Returns: boolean
@@ -2535,13 +2536,14 @@ export type Database = {
         Args: {
           p_match: string
           p_mine: number
-          p_path?: string
+          p_path: string
           p_theirs: number
+          p_user: string
         }
         Returns: boolean
       }
       set_screenshot_stats_gk: {
-        Args: { p_match: string; p_stats: Json }
+        Args: { p_match: string; p_stats: Json; p_user: string }
         Returns: number
       }
       set_win_streak_settings: {

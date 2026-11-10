@@ -18,6 +18,7 @@
     "local:reset": "node infra/local/cli.mjs reset",
     "local:down": "node infra/local/cli.mjs down",
     "local:status": "node infra/local/cli.mjs status",
+    "local:test:security": "vitest run --config infra/local/vitest.security.config.ts",
     "local:build": "node infra/local/cli.mjs build",
     "local:start": "node infra/local/cli.mjs start"
   },
